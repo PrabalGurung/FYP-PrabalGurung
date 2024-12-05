@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: FlashSlash
+  m_Controller: {fileID: 9100000, guid: 44a5782496269e84da5122e7f0835183, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 0ee5f38a8734b134ea63b76cb97ddae0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 00d85e7418502b94e8802010d0f6ce55, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 3f97bb9945adb2e43bcdb8eb15642046, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: babf2891df085f240a57943d6fa97e57, type: 2}
