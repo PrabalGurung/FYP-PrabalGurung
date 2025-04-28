@@ -1,0 +1,245 @@
+Week 3
+
+Discussed on data structure of database and created initial entity relation diagram 
+Discussed on database that was added in the game how it has affected the game mechanics flow.
+Talked about inventory slots and how it makes 30 clones during the start of the game to show 30 slots.
+Talked on how clicking on "Medikit*1" button from setting page will add one medikit in player's inventory. (Doesnot stack)
+Discussed on the how I added one NPC which is interactable and from unity we can add number of dialouges and is shown accordingly.
+Talked on during talking with NPC player will have to wait 2 sec before skipping to the next dialogue
+Discussed on the new addition of Run gameobject lets player to flee skipping the battle if player has higher speed.
+Talked on how clicking on buff*1 calls inventory database and shows the no of item, its item name id and player id to whom it belongs to.
+
+
+
+
+
+
+Week4
+
+Database extraction pressing a button updates and at start loads database
+
+Functional and nonfunctional requirement
+
+do i have to make new object if i change the scene 
+changing scene destroys all objects except static value and using the method of unity DontDestroyObjectOnLoad
+
+Clear problem week 2-4  --
+
+Not loading properly
+data continuously not loaded (need to call method everytime?)
+
+problem
+database not updated properly (have to use button)
+
+
+Week 5
+
+dfd level 0 and 1
+
+value stacking properly using update method instead of insert command in SQLite making it easier to read
+
+Object stack 
+using the method of unity makes stack of the same gameobject as the old one is not destroyed
+
+having harder time to extract data from database created gameobject for every database item extraction
+inventory item shown properly after gameobject was made during calling of item in database
+
+in inventory page (topdown view), red color is shown in the item slot where item are captured
+
+items are extracted from the database which are either picked in overworld or got from inventory
+
+in inventory page item panel, there are multiple slots where player items are shown, on clicking (slot are made as button) details are shown in detail panel
+
+problem
+item can be picked in overworld but it wont disappear after picked 
+
+tasks 
+
+inventory item show  --
+inventory extraction from database  --
+hovering or clicking on item should show its details --
+item in overworld mechanics --
+
+slot that is not the part of item is shown error
+
+slot are deleted making no slot to be shown after scene change
+
+Week6
+use case diagram
+dfd level 2
+
+Player Movement Problem
+Disabling gameobject at the start stops player movement so it should be kept enabled.
+
+Due to the start() function it wont make slot again making it impossible to excess it again.
+made the game object dont destroy on load and made in game ui inexcessible during turn base battle 
+
+in turn base battle when extracting item from database shows extra blank slot
+to remove extra blank slot extra condition added where i > 0
+
+
+Week 7
+made item usable in turn base battle based on which inventory item is selected yet to decrease to number and if 0 or null delete the item.
+
+in turn base battle it will continuously update inventory item but there is a error nullpoint reference error
+
+items are usable (turn base only made)
+Item Should be usable in turn base battle --
+
+Interaction with house --
+Player is able to interact with the house in T1 and will be transported to H1 
+
+multiple npc cannot talk only the latest one is able to talk
+most likely because object has been overwritten with the latest one (put in array???s)
+put an array and check which character is nearest to player using vector3 player.position and return the nearest npc that way object wont be replace by hiarchy and change according
+npc closest to player
+
+fixed the problem where character will always face down       
+
+fixed the problem where item could be taken infinite number of time and item would not destroy unless you are far from the item
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+
+Week 8
+
+code not only handles medicine but also lets character extract other items
+fixed the problem where starting new game player would not be able to see their inventory items
+static player page added
+
+fixed the problem where after scene change item and npc are unable to talk or take
+fixed the problem where inventory cannot be activated if scene are changed before activating
+Player can now see there updated inventory
+
+function: player stat integrate to database complete
+player data added to database
+player are extracted and can be seen in turn base battle/gameobject in top down view
+
+
+Week 9
+player database can be seen in player page too
+
+function: player stat integrate to database done
+
+function: player can run holding j button (no anim)
+
+maybe front end (house design, route design, cave design)
+bridge problem
+sorted by making two layer that either goes behind or forward by looking at player position z
+player can go to next level 2 ground from level 1 ground using bridge
+
+design problem
+remade design to make it better
+
+function: random enemy in cave
+scene does change but duplication of gamecontroller is made which is solved by making new script that prevents this
+main camera resets it initial position after scene change after changes in gamecontroller load game logic no longer applied the same way and needed to be tweaked
+random enemy in cave only comes during the first trigger
+Complete
+
+
+Week 10
+function: Environment item doesnot load in a single game file
+database integrated for environment
+item doesnot load in single game file 
+Complete
+
+
+function: Player can equip item successfully
+Complete
+function: Player can use item successfully
+Player not properly updated in database
+Complete
+
+function: player can buy items from npc in shop
+Buy Part
+added coin in player database to be able to buy and sell stuff
+added price in items table to be able to categorize buy and sell
+Problem with properly showing coin 
+Buying Part done
+
+Selling Part
+// later
+
+
+Week 11
+Front End
+Added Inventory Sprites and Item Sprites
+
+function: player gains experience from battle
+integrated monster list for experience coin and other features
+integrated exp to player 
+Done
+
+
+function: add map bounds
+Done
+
+Added different style for: Main menu UI, stats page, inventory page, map page
+
+
+
+
+function: add traps in environment
+Added Random Generation Map using Procedural Generation with Noise
+
+
+Fixed a problem where shop was available with every NPC
+
+
+Week 12
+function: animation in battle
+made start transition
+made 8 frame for selection 
+made 14 frame for item selection
+made 1 frame for status selection
+
+made transition for item button
+	problem
+		transition not shown properly (done)
+		item not showing
+		transition time mismatch
+		frame too much pixaleted
+
+
+function: Add animation in top down world
+added active pylon 1 frame
+added turn on pylon animation 16 frame
+added non active pylon 1 frame
+added npc talk animation 4 frame
+
+
+function: animated tile
+added underground water animation 16frame
+
+
+outside water anim
+waterfall anim
+
+
+Half done!
+
+	
+Week 13
+function: add story pages to start story	Priority
+
+
+function: add quality of life item		Mid
+
+
+function: battle mechanic add
+added skills mana and mana reduction during battle.
+added battle animation
+
+
+
+Week 14
+function: add events			Priority
+
+function: add music 			Priority
+
+
+
+Week 15
+function: add setting page		Mid
+
+

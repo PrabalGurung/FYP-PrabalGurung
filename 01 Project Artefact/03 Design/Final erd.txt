@@ -1,0 +1,621 @@
+1 Option
+option Id pk
+save file
+camera adjustment
+player id fk
+
+2 Player
+player id pk
+name
+attribute
+level
+skill id fk
+exp point
+max health
+max mana
+
+3 Party
+party id pk
+name
+attribute
+level
+skill id fk
+exp point
+max health
+max mana
+
+4 skill
+skill id pk
+name
+description
+effect
+
+5 current player stat
+current player id pk
+player id fk
+current health
+current mana
+
+6 current party stat
+current party id pk
+party id fk
+current health
+current mana
+
+7 battle
+battle id pk
+player id fk
+enemy id fk
+turn taken
+
+8 talent
+talent id pk
+talent name 
+talent description
+player id fk
+party id fk
+
+9 map 
+map id pk
+name
+description
+
+shop
+shop id pk
+item id fk
+price 
+npc id fk
+map id fk
+
+quest
+quest id pk
+title 
+description
+reward
+npc id fk
+
+enemy 
+enemy id pk
+name
+skill
+mana
+exp 
+max health
+npc id fk
+
+npc
+npc id pk
+name
+dialogue
+level
+rank
+
+event
+event id pk
+npc id fk
+
+environment 
+environment id
+item id fk
+trap id fk
+taken
+
+item
+item id pk
+name
+description
+effect
+type
+
+trap 
+trap id pk
+name
+description
+effect
+
+inventory
+inventory id pk
+quantity
+player id fk
+item id fk
+equipment id fk
+
+equipment
+equipment id pk
+name
+description
+effect
+stats
+
+player distribution
+player distribution id pk
+player id fk
+stat hp
+stat mana
+stat atk
+max stat player
+
+party distribution
+party distribution id pk
+party id fk
+stat hp
+stat mana
+stat atk
+max stat player
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SQLITE
+
+-- Create the Skill table first, since it's referenced by other tables
+CREATE TABLE Skill (
+    SkillId INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Description TEXT,
+    Effect VARCHAR(255)
+);
+
+-- Create the Npc table
+CREATE TABLE Npc (
+    NpcId INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Dialogue TEXT,
+    Level INT,
+    Rank VARCHAR(255)
+);
+
+-- Create the Item and Trap tables, since they are referenced later
+CREATE TABLE Item (
+    ItemId INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Description TEXT,
+    Effect VARCHAR(255),
+    Type VARCHAR(255)
+);
+
+CREATE TABLE Trap (
+    TrapId INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Description TEXT,
+    Effect VARCHAR(255)
+);
+
+-- Create the Equipment table
+CREATE TABLE Equipment (
+    EquipmentId INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Description TEXT,
+    Effect VARCHAR(255),
+    Stats VARCHAR(255)
+);
+
+-- Create Player table
+CREATE TABLE Player (
+    PlayerId INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Attribute VARCHAR(255),
+    Level INT,
+    SkillId INT,
+    ExpPoint INT,
+    MaxHealth INT,
+    MaxMana INT,
+    FOREIGN KEY (SkillId) REFERENCES Skill(SkillId)
+);
+
+-- Create Party table
+CREATE TABLE Party (
+    PartyId INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Attribute VARCHAR(255),
+    Level INT,
+    SkillId INT,
+    ExpPoint INT,
+    MaxHealth INT,
+    MaxMana INT,
+    FOREIGN KEY (SkillId) REFERENCES Skill(SkillId)
+);
+
+-- Create the CurrentPlayerStat and CurrentPartyStat tables
+CREATE TABLE CurrentPlayerStat (
+    CurrentPlayerId INT PRIMARY KEY,
+    PlayerId INT,
+    CurrentHealth INT,
+    CurrentMana INT,
+    FOREIGN KEY (PlayerId) REFERENCES Player(PlayerId)
+);
+
+CREATE TABLE CurrentPartyStat (
+    CurrentPartyId INT PRIMARY KEY,
+    PartyId INT,
+    CurrentHealth INT,
+    CurrentMana INT,
+    FOREIGN KEY (PartyId) REFERENCES Party(PartyId)
+);
+
+-- Create Battle table
+CREATE TABLE Battle (
+    BattleId INT PRIMARY KEY,
+    PlayerId INT,
+    EnemyId INT,
+    TurnTaken INT,
+    FOREIGN KEY (PlayerId) REFERENCES Player(PlayerId),
+    FOREIGN KEY (EnemyId) REFERENCES Enemy(EnemyId)
+);
+
+-- Create the Talent table
+CREATE TABLE Talent (
+    TalentId INT PRIMARY KEY,
+    TalentName VARCHAR(255),
+    TalentDescription TEXT,
+    PlayerId INT,
+    PartyId INT,
+    FOREIGN KEY (PlayerId) REFERENCES Player(PlayerId),
+    FOREIGN KEY (PartyId) REFERENCES Party(PartyId)
+);
+
+-- Create the Enemy table
+CREATE TABLE Enemy (
+    EnemyId INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Skill VARCHAR(255),
+    Mana INT,
+    Exp INT,
+    MaxHealth INT,
+    NpcId INT,
+    FOREIGN KEY (NpcId) REFERENCES Npc(NpcId)
+);
+
+-- Create the Event table
+CREATE TABLE Event (
+    EventId INT PRIMARY KEY,
+    NpcId INT,
+    FOREIGN KEY (NpcId) REFERENCES Npc(NpcId)
+);
+
+-- Create the Map table
+CREATE TABLE Map (
+    MapId INT PRIMARY KEY,
+    Name VARCHAR(255),
+    Description TEXT
+);
+
+-- Create the Shop table
+CREATE TABLE Shop (
+    ShopId INT PRIMARY KEY,
+    ItemId INT,
+    Price INT,
+    NpcId INT,
+    MapId INT,
+    FOREIGN KEY (ItemId) REFERENCES Item(ItemId),
+    FOREIGN KEY (NpcId) REFERENCES Npc(NpcId),
+    FOREIGN KEY (MapId) REFERENCES Map(MapId)
+);
+
+-- Create the Quest table
+CREATE TABLE Quest (
+    QuestId INT PRIMARY KEY,
+    Title VARCHAR(255),
+    Description TEXT,
+    Reward VARCHAR(255),
+    NpcId INT,
+    FOREIGN KEY (NpcId) REFERENCES Npc(NpcId)
+);
+
+-- Create the Environment table
+CREATE TABLE Environment (
+    EnvironmentId INT PRIMARY KEY,
+    ItemId INT,
+    TrapId INT,
+    Taken BOOLEAN,
+    FOREIGN KEY (ItemId) REFERENCES Item(ItemId),
+    FOREIGN KEY (TrapId) REFERENCES Trap(TrapId)
+);
+
+-- Create the Inventory table
+CREATE TABLE Inventory (
+    InventoryId INT PRIMARY KEY,
+    Quantity INT,
+    PlayerId INT,
+    ItemId INT,
+    EquipmentId INT,
+    FOREIGN KEY (PlayerId) REFERENCES Player(PlayerId),
+    FOREIGN KEY (ItemId) REFERENCES Item(ItemId),
+    FOREIGN KEY (EquipmentId) REFERENCES Equipment(EquipmentId)
+);
+
+-- Create the PlayerDistribution table
+CREATE TABLE PlayerDistribution (
+    PlayerDistributionId INT PRIMARY KEY,
+    PlayerId INT,
+    StatHp INT,
+    StatMana INT,
+    StatAtk INT,
+    MaxStatPlayer INT,
+    FOREIGN KEY (PlayerId) REFERENCES Player(PlayerId)
+);
+
+-- Create the PartyDistribution table
+CREATE TABLE PartyDistribution (
+    PartyDistributionId INT PRIMARY KEY,
+    PartyId INT,
+    StatHp INT,
+    StatMana INT,
+    StatAtk INT,
+    MaxStatPlayer INT,
+    FOREIGN KEY (PartyId) REFERENCES Party(PartyId)
+);
+
+-- Create the Options table
+CREATE TABLE Options (
+    OptionId INT PRIMARY KEY,
+    SaveFile VARCHAR(255),
+    CameraAdjustment VARCHAR(255),
+    PlayerId INT,
+    FOREIGN KEY (PlayerId) REFERENCES Player(PlayerId)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SQLPLUS
+
+
+
+-- Create the Skill table
+CREATE TABLE Skill (
+    SkillId INT PRIMARY KEY,
+    Name VARCHAR2(255),
+    Description CLOB,
+    Effect VARCHAR2(255)
+);
+
+CREATE TABLE Npc (
+    NpcId INT PRIMARY KEY,
+    Name VARCHAR2(255),
+    Dialogue CLOB,
+    NpcLevel INT,
+    Rank VARCHAR2(255)
+);
+-- Create the Item table
+CREATE TABLE Item (
+    ItemId INT PRIMARY KEY,
+    Name VARCHAR2(255),
+    Description CLOB,
+    Effect VARCHAR2(255),
+    Type VARCHAR2(255)
+);
+
+-- Create the Trap table
+CREATE TABLE Trap (
+    TrapId INT PRIMARY KEY,
+    Name VARCHAR2(255),
+    Description CLOB,
+    Effect VARCHAR2(255)
+);
+
+-- Create the Equipment table
+CREATE TABLE Equipment (
+    EquipmentId INT PRIMARY KEY,
+    Name VARCHAR2(255),
+    Description CLOB,
+    Effect VARCHAR2(255),
+    Stats VARCHAR2(255)
+);
+
+-- Create Player table
+CREATE TABLE Player (
+    PlayerId INT PRIMARY KEY,
+    Name VARCHAR2(255),
+    Attribute VARCHAR2(255),
+    PlayerLevel INT,
+    SkillId INT,
+    ExpPoint INT,
+    MaxHealth INT,
+    MaxMana INT,
+    FOREIGN KEY (SkillId) REFERENCES Skill(SkillId)
+);
+
+-- Create Party table
+CREATE TABLE Party (
+    PartyId INT PRIMARY KEY,
+    Name VARCHAR2(255),
+    Attribute VARCHAR2(255),
+    PartyLevel INT,
+    SkillId INT,
+    ExpPoint INT,
+    MaxHealth INT,
+    MaxMana INT,
+    FOREIGN KEY (SkillId) REFERENCES Skill(SkillId)
+);
+
+-- Create CurrentPlayerStat table
+CREATE TABLE CurrentPlayerStat (
+    CurrentPlayerId INT PRIMARY KEY,
+    PlayerId INT,
+    CurrentHealth INT,
+    CurrentMana INT,
+    FOREIGN KEY (PlayerId) REFERENCES Player(PlayerId)
+);
+
+-- Create CurrentPartyStat table
+CREATE TABLE CurrentPartyStat (
+    CurrentPartyId INT PRIMARY KEY,
+    PartyId INT,
+    CurrentHealth INT,
+    CurrentMana INT,
+    FOREIGN KEY (PartyId) REFERENCES Party(PartyId)
+);
+
+
+-- Create Enemy table
+CREATE TABLE Enemy (
+    EnemyId INT PRIMARY KEY,
+    Name VARCHAR2(255),
+    Skill VARCHAR2(255),
+    Mana INT,
+    Exp INT,
+    MaxHealth INT,
+    NpcId INT,
+    FOREIGN KEY (NpcId) REFERENCES Npc(NpcId)
+);
+
+-- Create Battle table
+CREATE TABLE Battle (
+    BattleId INT PRIMARY KEY,
+    PlayerId INT,
+    EnemyId INT,
+    TurnTaken INT,
+    FOREIGN KEY (PlayerId) REFERENCES Player(PlayerId),
+    FOREIGN KEY (EnemyId) REFERENCES Enemy(EnemyId)
+);
+
+-- Create Talent table
+CREATE TABLE Talent (
+    TalentId INT PRIMARY KEY,
+    TalentName VARCHAR2(255),
+    TalentDescription CLOB,
+    PlayerId INT,
+    PartyId INT,
+    FOREIGN KEY (PlayerId) REFERENCES Player(PlayerId),
+    FOREIGN KEY (PartyId) REFERENCES Party(PartyId)
+);
+
+
+-- Create Event table
+CREATE TABLE Event (
+    EventId INT PRIMARY KEY,
+    NpcId INT,
+    FOREIGN KEY (NpcId) REFERENCES Npc(NpcId)
+);
+
+-- Create Map table
+CREATE TABLE Map (
+    MapId INT PRIMARY KEY,
+    Name VARCHAR2(255),
+    Description CLOB
+);
+
+-- Create Shop table
+CREATE TABLE Shop (
+    ShopId INT PRIMARY KEY,
+    ItemId INT,
+    Price INT,
+    NpcId INT,
+    MapId INT,
+    FOREIGN KEY (ItemId) REFERENCES Item(ItemId),
+    FOREIGN KEY (NpcId) REFERENCES Npc(NpcId),
+    FOREIGN KEY (MapId) REFERENCES Map(MapId)
+);
+
+-- Create Quest table
+CREATE TABLE Quest (
+    QuestId INT PRIMARY KEY,
+    Title VARCHAR2(255),
+    Description CLOB,
+    Reward VARCHAR2(255),
+    NpcId INT,
+    FOREIGN KEY (NpcId) REFERENCES Npc(NpcId)
+);
+
+-- Create Environment table
+CREATE TABLE Environment (
+    EnvironmentId INT PRIMARY KEY,
+    ItemId INT,
+    TrapId INT,
+    Taken CHAR(1),  -- Using CHAR for BOOLEAN representation
+    FOREIGN KEY (ItemId) REFERENCES Item(ItemId),
+    FOREIGN KEY (TrapId) REFERENCES Trap(TrapId)
+);
+
+-- Create Inventory table
+CREATE TABLE Inventory (
+    InventoryId INT PRIMARY KEY,
+    Quantity INT,
+    PlayerId INT,
+    ItemId INT,
+    EquipmentId INT,
+    FOREIGN KEY (PlayerId) REFERENCES Player(PlayerId),
+    FOREIGN KEY (ItemId) REFERENCES Item(ItemId),
+    FOREIGN KEY (EquipmentId) REFERENCES Equipment(EquipmentId)
+);
+
+-- Create PlayerDistribution table
+CREATE TABLE PlayerDistribution (
+    PlayerDistributionId INT PRIMARY KEY,
+    PlayerId INT,
+    StatHp INT,
+    StatMana INT,
+    StatAtk INT,
+    MaxStatPlayer INT,
+    FOREIGN KEY (PlayerId) REFERENCES Player(PlayerId)
+);
+
+-- Create PartyDistribution table
+CREATE TABLE PartyDistribution (
+    PartyDistributionId INT PRIMARY KEY,
+    PartyId INT,
+    StatHp INT,
+    StatMana INT,
+    StatAtk INT,
+    MaxStatPlayer INT,
+    FOREIGN KEY (PartyId) REFERENCES Party(PartyId)
+);
+
+-- Create Options table
+CREATE TABLE Options (
+    OptionId INT PRIMARY KEY,
+    SaveFile VARCHAR2(255),
+    CameraAdjustment VARCHAR2(255),
+    PlayerId INT,
+    FOREIGN KEY (PlayerId) REFERENCES Player(PlayerId)
+);

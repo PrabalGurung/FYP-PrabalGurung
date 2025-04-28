@@ -1,0 +1,22 @@
+Dashain achivements
+Battle system run away
+database running successfully (after scene 2: turn base system didnot load properly) (after closing scene 1: didnot save)
+Item door (attack item water crystal added), (healing item potion added)
+Database made: item player, skill, inventory
+npc talk system
+inventory vanyo(50%) 
+	inventory ma description haru dekhaunu paryo
+	inventory stack garni > database ma stack?
+
+todo:
+inventory start garni
+inventory ko battle item battle system ma import hunu paryo ani ui ma dekhau nu paryo
+ani item select garema use hunu paryo
+animation
+
+
+Problem:
+Transition doesnot work properly
+
+
+gameobject false ma rakhni so sakesi dekhinna 
