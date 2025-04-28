@@ -1,0 +1,22 @@
+Youtube Reference For Learning
+TopDown View
+https://www.youtube.com/watch?v=DQY62meLVCk
+https://www.youtube.com/watch?v=UId0mwanBZg
+https://www.youtube.com/watch?v=wlBJ0yZOYfM
+
+NPC talk
+https://www.youtube.com/watch?v=1nFNOyCalzo
+
+Pick Item
+https://www.youtube.com/watch?v=9I83LZghLlk
+
+Turn Base
+https://www.youtube.com/watch?v=_1pz_ohupPs
+
+SceneManagement
+
+Transition
+https://www.youtube.com/watch?v=CE9VOZivb3I
+
+Tilemap grid
+https://www.youtube.com/watch?v=otQH2M-Lkd0
